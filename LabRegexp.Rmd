@@ -1,7 +1,6 @@
 ---
-title: "Regular Expressions"
-subtitle: "RegExp"
-author: "Anna Clara Deniz / Ángela Duarte"
+title: "Regular Expressions (RegExp)"
+author: "Anna Deniz / Ángela Duarte"
 output: 
   html_document:
     toc: TRUE
@@ -22,7 +21,7 @@ library(stringr)
 ```
 # Introduction
 
-Regular Expressions, also known as Regexps, are a language that is used to describe and find patterns in strings. They are useful not only in R but in other languages as well. 
+Regular Expressions, also known as Regexps, are conventions used to describe and find patterns in strings. They are useful not only in R but in other languages as well. 
 
 “Strictly speaking, they are not so much a tool as they are a convention on how to query strings across a wide range of functions.” [Munzert et al., (Munzert et al., Automated Data Collection with R] (https://bit.ly/3BdbkhS). 
 
@@ -114,7 +113,7 @@ Similarly, we can use `"\\w+"` to get all the alpha numeric characters and `"\\s
 
 ```{r}
 str_match(school_things, "\\w+") 
-str_match(school_things, "\\s+")
+str_match(school_things, "\\s+") 
 ```
 
 
@@ -139,7 +138,7 @@ str_match(school_things, "^not.*[[:alpha:]]")
 
 4. Practicing conditions by finding the expressions that start with "n" or "p". 
 ```{r}
-str_match(school_things, "[np].*")
+str_match(school_things, "[n|p].*")
 ```
 
 5. Grouping with conditions! Take the words that have two repeated vowels.
@@ -156,32 +155,59 @@ str_match(school_things,"\\w*(a|e|i|o|u){2}.")
 
 As we said before, regular expressions are conventions to find and manipulate patterns in text data. Using the “str_match” function from the stringR package we can try out these conventions! 
 
-+Note+: other stringR functions can be used with regular expressions, but we will not explain them because it is not the subject of our workshop. We invite you to go to the “String Manipulation with R” presentation to learn more about the package!
+*Note*: other stringR functions can be used with regular expressions, but we will not explain them because it is not the subject of our workshop. We invite you to go to the “String Manipulation with R” presentation to learn more about this package!
 
-+The story:+ 
+Before starting, some **reminders**:
+
+1.  Practice makes perfect! You might not get the expression you want at first, but with patience and a little work you'll eventually get where you want. 
+
+2. Read RegExps out loud to understand them! It is easier to remember them if you understand what they mean. For example, "slash d plus"(`"\\d+`) doesn't make sense until you remember that it means "give me one or more digits together"). (We thank Colin Quirk for this advice. You can see his tutorial, [_here_](https://www.youtube.com/watch?v=uJKpz9T7mAg). 
+
+3. Remember that RegExp find patterns and then stop searching. Keep your repetition operators close and the brackets even closer!
+
+*The story:* 
 Imagine you decided to digitize one of your old notebooks. The following vectors were found on the first three pages.  
 
 ```{r}
-#shopping _list <- c(“tomato”, “tangerine”, “apple”, “banana”, “papaya”, “tamarindo”)
-#contact_list <- c(“lisa 444-4444-5555”, “anna linkedin”, “kevin’s number 344456632”, “juan’s?”, “mary: linkedin”) 
-#To_do_list <-c(“shopping”, “laundry”, “university stuff”, “salsa and samba”)
+shopping_list <-  c("tomato", "tangerine", "apple", "banana", "papaya", "tamarind")
+contact_list <- c("lisa 444-4444-5555", "anna linkedin", "kevin’s number 344456632", "juan ?", "mary: linkedin") 
+To_do_list <-c("shopping and banking", "laundry", "university stuff", "salsa and samba")
 
 ```
 
-We will use these vectors to explain 4 kinds of regular expressions. We will “mix and match” them to identify patterns on strings:  
+We will use these vectors to practice the key regular expressions and their combinations. But first, let's group them together to be able to remember them with more ease:   
+
 1. Anchors and wild cards
-2. Letters that have meanings
-3. brackets 
-4. Catching groups
+  - `^` = Beginning of a string
+  - `$` = End of a String
+  - `.` = wild card
+2. Repetitions
+  - `+` = 1 or more
+  - `*` = 0 or more
+3. Letters that have meanings
+  - `\d` = digits
+  - `\w` = alphanumeric characters
+  - `\s` = spaces
+4. Brackets 
+  - `[ ]` = Matching characters or brackets
+  - `( )` = Grouping
+  - `{ }` = Repeated 
+5. Conditionals
+  -  `|` = Either, or
 
-Although there are more regular expressions out there, we believe these are the most basic ones which will allow you to understand the basics of Regexp. We will leave some references in case you want to learn more!
 
-Hint: read the expressions out loud:  Give me one or more digits! (We thank Colin Quirk for this advice. You can see his tutorial, [_here_](https://www.youtube.com/watch?v=uJKpz9T7mAg). 
+**Exercise 1: Basic Combinations of**
 
-**Exercise 1**
+Use first the `shopping_list` to practice anchors and wild cards. Remember to "read" the RegExp out loud! 
+
+```{r}
+shopping_list %>% str_match(".")
+
+shopping_list %>% str_match("^t")
 ```
 
-```
+**Exercise 2:  **
+
 
 ---
 
@@ -195,9 +221,9 @@ There are a bunch of cheat sheets out there. We recommend this one: XXX. If you 
 
 # Sources {-}
 
-1. [_R for Data Science_](http://r4ds.had.co.nz/)
+1. [_R for Data Science_](https://r4ds.had.co.nz/strings.html)
 2. [_Automated Data Collection with R. A Practical Guide to Web Scraping and Text Mining_](https://onlinelibrary.wiley.com/doi/book/)
-3. [_Interactive Tutorial on Regular Expressions_] (https://regexone.com/)
-4. [_R Tutorial | Regular Expressions in R] (https://www.youtube.com/watch?v=uJKpz9T7mAg)
+3. [_Interactive Tutorial on Regular Expressions_](https://regexone.com/)
+4. [_R Tutorial | Regular Expressions in R_](https://www.youtube.com/watch?v=uJKpz9T7mAg)
 
 
