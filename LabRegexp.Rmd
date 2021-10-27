@@ -28,13 +28,6 @@ Regular Expressions, also known as Regexps, are a language that is used to descr
 
 They may look *very* complicated if you are seeing them for the first time, but it is actually not that hard once you understand how they work. In this tutorial, we are going to show you how to apply them using `Stringr`, a package from the Tidyverse used for string manipulation. 
 
-# Contents:
-* What are Regexps good for?
-* Key expressions
-* How can you use RegExp to solve problems--Combinations
-* Try it yourself - Exercises
-* Where should you go to learn more
-* Sources 
 
 ---
 
@@ -100,17 +93,72 @@ Now, let's practice!
 ---
 
 
-# How can you use RegExp to solve problems--Combinations
+# How can you use RegExp to solve problems? Using Combinations
+
+Consider the following list of school objects:
+
+```{r}
+school_things=c("notebooks 450", "sheets 1000", "pencils 457", "colors 157", "nothing")
+```
+
+We will practice 5 combinations of the "Key Expressions" used above to do some interesting text manipulation. Let's start!
+
+1. What if we wanted to get all elements from a certain kind in the `school_things` vector?
+
+```{r}
+str_match(school_things, "\\d+")
+```
+This `"\\d+"` means:"give me one or more digits from the vector `school_things`.
+
+Similarly, we can use `"\\w+"` to get all the alpha numeric characters and `"\\s+"` to get all whitespaces. How would you translate them to plain English? 
+
+```{r}
+str_match(school_things, "\\w+") 
+str_match(school_things, "\\s+")
+```
+
+
+2. Separating numbers from the words. Hint: Use the expressions practiced in 1), `()` to group the strings and `\\W*` to remove all white spaces.  
+
+```{r}
+new_pattern="(\\w*)\\W*(\\d*)"
+str_match(school_things, new_pattern)
+```
+Notice that the result is a matrix in which the columns are the vector itself, its alphanumeric values and its digits. 
+
+3. How can we find the expressions that start with "not" on the vector? 
+Notice that we will use `[[:alpha:]]` to get only the numerical part of it.
+
+Let's learn the power of pattern matching!
+```{r}
+
+str_match(school_things, "^not.*[[:alpha:]]")
+
+```
+
+
+4. Practicing conditions by finding the expressions that start with "n" or "p". 
+```{r}
+str_match(school_things, "[np].*")
+```
+
+5. Grouping with conditions! Take the words that have two repeated vowels.
+
+```{r}
+str_match(school_things,"\\w*(a|e|i|o|u){2}.")
+```
+
 
 
 ---
 
-# Try it yourself
+# Try it yourself!
+
 As we said before, regular expressions are conventions to find and manipulate patterns in text data. Using the “str_match” function from the stringR package we can try out these conventions! 
 
-Note: other stringR functions can be used with regular expressions, but we will not explain them because it is not the subject of our workshop. We invite you to go to the “String Manipulation with R” presentation to learn more about the package!
++Note+: other stringR functions can be used with regular expressions, but we will not explain them because it is not the subject of our workshop. We invite you to go to the “String Manipulation with R” presentation to learn more about the package!
 
-The story: 
++The story:+ 
 Imagine you decided to digitize one of your old notebooks. The following vectors were found on the first three pages.  
 
 ```{r}
@@ -128,6 +176,7 @@ We will use these vectors to explain 4 kinds of regular expressions. We will “
 
 Although there are more regular expressions out there, we believe these are the most basic ones which will allow you to understand the basics of Regexp. We will leave some references in case you want to learn more!
 
+Hint: read the expressions out loud:  Give me one or more digits! (We thank Colin Quirk for this advice. You can see his tutorial, [_here_](https://www.youtube.com/watch?v=uJKpz9T7mAg). 
 
 **Exercise 1**
 ```

@@ -336,17 +336,6 @@ div.tocify {
 <p>Regular Expressions, also known as Regexps, are a language that is used to describe and find patterns in strings. They are useful not only in R but in other languages as well.</p>
 <p>“Strictly speaking, they are not so much a tool as they are a convention on how to query strings across a wide range of functions.” [Munzert et al., (Munzert et al., Automated Data Collection with R] (<a href="https://bit.ly/3BdbkhS" class="uri">https://bit.ly/3BdbkhS</a>).</p>
 <p>They may look <em>very</em> complicated if you are seeing them for the first time, but it is actually not that hard once you understand how they work. In this tutorial, we are going to show you how to apply them using <code>Stringr</code>, a package from the Tidyverse used for string manipulation.</p>
-</div>
-<div id="contents" class="section level1">
-<h1>Contents:</h1>
-<ul>
-<li>What are Regexps good for?</li>
-<li>Key expressions</li>
-<li>How can you use RegExp to solve problems–Combinations</li>
-<li>Try it yourself - Exercises</li>
-<li>Where should you go to learn more</li>
-<li>Sources</li>
-</ul>
 <hr />
 </div>
 <div id="what-are-regexps-good-for" class="section level1">
@@ -393,21 +382,94 @@ div.tocify {
 </tbody>
 </table>
 </div>
-<div id="how-can-you-use-regexp-to-solve-problemscombinations" class="section level1">
-<h1>How can you use RegExp to solve problems–Combinations</h1>
+<div id="how-can-you-use-regexp-to-solve-problems-using-combinations" class="section level1">
+<h1>How can you use RegExp to solve problems? Using Combinations</h1>
+<p>Consider the following list of school objects:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>school_things<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;notebooks 450&quot;</span>, <span class="st">&quot;sheets 1000&quot;</span>, <span class="st">&quot;pencils 457&quot;</span>, <span class="st">&quot;colors 157&quot;</span>, <span class="st">&quot;nothing&quot;</span>)</span></code></pre></div>
+<p>We will practice 5 combinations of the “Key Expressions” used above to do some interesting text manipulation. Let’s start!</p>
+<ol style="list-style-type: decimal">
+<li>What if we wanted to get all elements from a certain kind in the <code>school_things</code> vector?</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(school_things, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d+&quot;</span>)</span></code></pre></div>
+<pre><code>##      [,1]  
+## [1,] &quot;450&quot; 
+## [2,] &quot;1000&quot;
+## [3,] &quot;457&quot; 
+## [4,] &quot;157&quot; 
+## [5,] NA</code></pre>
+<p>This <code>&quot;\\d+&quot;</code> means:&quot;give me one or more digits from the vector <code>school_things</code>.</p>
+<p>Similarly, we can use <code>&quot;\\w+&quot;</code> to get all the alpha numeric characters and <code>&quot;\\s+&quot;</code> to get all whitespaces. How would you translate them to plain English?</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(school_things, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">w+&quot;</span>) </span></code></pre></div>
+<pre><code>##      [,1]       
+## [1,] &quot;notebooks&quot;
+## [2,] &quot;sheets&quot;   
+## [3,] &quot;pencils&quot;  
+## [4,] &quot;colors&quot;   
+## [5,] &quot;nothing&quot;</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(school_things, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s+&quot;</span>)</span></code></pre></div>
+<pre><code>##      [,1]
+## [1,] &quot; &quot; 
+## [2,] &quot; &quot; 
+## [3,] &quot; &quot; 
+## [4,] &quot; &quot; 
+## [5,] NA</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Separating numbers from the words. Hint: Use the expressions practiced in 1), <code>()</code> to group the strings and <code>\\W*</code> to remove all white spaces.</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>new_pattern<span class="ot">=</span><span class="st">&quot;(</span><span class="sc">\\</span><span class="st">w*)</span><span class="sc">\\</span><span class="st">W*(</span><span class="sc">\\</span><span class="st">d*)&quot;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(school_things, new_pattern)</span></code></pre></div>
+<pre><code>##      [,1]            [,2]        [,3]  
+## [1,] &quot;notebooks 450&quot; &quot;notebooks&quot; &quot;450&quot; 
+## [2,] &quot;sheets 1000&quot;   &quot;sheets&quot;    &quot;1000&quot;
+## [3,] &quot;pencils 457&quot;   &quot;pencils&quot;   &quot;457&quot; 
+## [4,] &quot;colors 157&quot;    &quot;colors&quot;    &quot;157&quot; 
+## [5,] &quot;nothing&quot;       &quot;nothing&quot;   &quot;&quot;</code></pre>
+<p>Notice that the result is a matrix in which the columns are the vector itself, its alphanumeric values and its digits.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>How can we find the expressions that start with “not” on the vector? Notice that we will use <code>[[:alpha:]]</code> to get only the numerical part of it.</li>
+</ol>
+<p>Let’s learn the power of pattern matching!</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(school_things, <span class="st">&quot;^not.*[[:alpha:]]&quot;</span>)</span></code></pre></div>
+<pre><code>##      [,1]       
+## [1,] &quot;notebooks&quot;
+## [2,] NA         
+## [3,] NA         
+## [4,] NA         
+## [5,] &quot;nothing&quot;</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Practicing conditions by finding the expressions that start with “n” or “p”.</li>
+</ol>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(school_things, <span class="st">&quot;[np].*&quot;</span>)</span></code></pre></div>
+<pre><code>##      [,1]           
+## [1,] &quot;notebooks 450&quot;
+## [2,] NA             
+## [3,] &quot;pencils 457&quot;  
+## [4,] NA             
+## [5,] &quot;nothing&quot;</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Grouping with conditions! Take the words that have two repeated vowels.</li>
+</ol>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(school_things,<span class="st">&quot;</span><span class="sc">\\</span><span class="st">w*(a|e|i|o|u){2}.&quot;</span>)</span></code></pre></div>
+<pre><code>##      [,1]       [,2]
+## [1,] &quot;notebook&quot; &quot;o&quot; 
+## [2,] &quot;sheet&quot;    &quot;e&quot; 
+## [3,] NA         NA  
+## [4,] NA         NA  
+## [5,] NA         NA</code></pre>
 <hr />
 </div>
 <div id="try-it-yourself" class="section level1">
-<h1>Try it yourself</h1>
+<h1>Try it yourself!</h1>
 <p>As we said before, regular expressions are conventions to find and manipulate patterns in text data. Using the “str_match” function from the stringR package we can try out these conventions!</p>
-<p>Note: other stringR functions can be used with regular expressions, but we will not explain them because it is not the subject of our workshop. We invite you to go to the “String Manipulation with R” presentation to learn more about the package!</p>
-<p>The story: Imagine you decided to digitize one of your old notebooks. The following vectors were found on the first three pages.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#shopping _list &lt;- c(“tomato”, “tangerine”, “apple”, “banana”, “papaya”, “tamarindo”)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#contact_list &lt;- c(“lisa 444-4444-5555”, “anna linkedin”, “kevin’s number 344456632”, “juan’s?”, “mary: linkedin”) </span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#To_do_list &lt;-c(“shopping”, “laundry”, “university stuff”, “salsa and samba”)</span></span></code></pre></div>
+<p>+Note+: other stringR functions can be used with regular expressions, but we will not explain them because it is not the subject of our workshop. We invite you to go to the “String Manipulation with R” presentation to learn more about the package!</p>
+<p>+The story:+ Imagine you decided to digitize one of your old notebooks. The following vectors were found on the first three pages.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#shopping _list &lt;- c(“tomato”, “tangerine”, “apple”, “banana”, “papaya”, “tamarindo”)</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#contact_list &lt;- c(“lisa 444-4444-5555”, “anna linkedin”, “kevin’s number 344456632”, “juan’s?”, “mary: linkedin”) </span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#To_do_list &lt;-c(“shopping”, “laundry”, “university stuff”, “salsa and samba”)</span></span></code></pre></div>
 <p>We will use these vectors to explain 4 kinds of regular expressions. We will “mix and match” them to identify patterns on strings:<br />
 1. Anchors and wild cards 2. Letters that have meanings 3. brackets 4. Catching groups</p>
 <p>Although there are more regular expressions out there, we believe these are the most basic ones which will allow you to understand the basics of Regexp. We will leave some references in case you want to learn more!</p>
+<p>Hint: read the expressions out loud: Give me one or more digits! (We thank Colin Quirk for this advice. You can see his tutorial, <a href="https://www.youtube.com/watch?v=uJKpz9T7mAg"><em>here</em></a>.</p>
 <p><strong>Exercise 1</strong></p>
 <pre><code></code></pre>
 <hr />
