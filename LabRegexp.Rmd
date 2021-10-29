@@ -133,7 +133,7 @@ str_match(shopping_list, pattern)
 
 ```
 
-7. `*` matches 0 or more of the matching patterns in the string that were specified before. It is specially useful for finding empty strings:
+7. `*` matches 0 or more of the matching patterns in the string that were specified before. It is especially useful for finding empty strings:
  
 ```{r}
 
@@ -208,6 +208,10 @@ pattern <- "(es).*"
 str_match(shopping_list, pattern)
 
 ```
+
+**Fun fact!!**
+
+In Regexps, using capital letters will have the opposite effect of lower case letters. While `\\d` will get the first digit of a string, `\\D` will get the first _non-digit_ of the string.
 
 Now, let's practice more complicated, applied stuff!
 
@@ -291,19 +295,18 @@ Before starting, some **reminders**:
 
 Let's do this!
 
-**Exercise 1: **
+**Exercise: **
 
 Imagine you decided to digitize one of your old notebooks and found the following vector. 
 
 ```{r}
-contact_list <- c(" lisa 444-4444-5555", "Anna: 456 777-9898",
-                  "kevin’s number 344 456 632", "juan has no number",
-                  "576 987 678") 
+contact_list <- c(" lisa 444-444-5555", "Anna: 456 777-9898", 
+                  "kevin’s number 344 456 6732","Mathias245 4566576", "576 987 6578") 
 ```
 
 *How would you separate numbers from words and place them on a matrix?*
 
-**Solution 1**
+**Step by step solution**
 
 We will use the expressions we have learned so far to do this. 
 
@@ -328,7 +331,9 @@ This problem is partially solved by using `\\w+`. What is missing?
 str_match(contact_list, "\\w+")
 ```
 
-Since `\\w+`  takes numeric values, and it stops at the end of the first word, it still doesn't get us what we want. We can use `\\D+` instead (remember that it reads: "R, give me one or more non-digits").
+Since `\\w+`  takes numeric values, and it stops at the end of the first word, it still doesn't get us what we want. We can use `\\D+` instead. 
+
+
 
 ```{r}
 str_match(contact_list, "\\D+")
@@ -341,40 +346,72 @@ str_match(contact_list, "\\d*")
 str_match(contact_list, "\\d+")
 ```
 
-3. Putting it all together with grouping operators.
+Notice that the numbers on the strings are grouped together in 3digits or 4 digits groups. We will get the first one by using the `{}` operator:
 
 ```{r}
-str_match(contact_list, "\\w*(\\d{3}).*(\\d{3}).*(\\d{4})")
+str_match(contact_list, "(\\d{3})")
+```
+
+3. What if we want to get the rest of the digits and put them as columns of a matrix? 
+Hint: remember the `()` operator to group, and remember to account for the separating characters!
+
+```{r}
+str_match( contact_list, "(\\d{3}).*(\\d{3}).*(\\d{4})")
+```
+
+
+4. Putting it all together with grouping operators.
+
+```{r}
+str_match(contact_list, "(\\w*.*).*(\\d{3}).*(\\d{3}).*(\\d{4})")
 ```
 
 
 
-**Exercise 2: **
+**Extra Exercise (in case you want to practice at home)**
 
+For this exercise, we will use the `sentences` vector included on the `stringr`package. This vector has one English language sentence per row. 
 
 ```{r}
-text1 <- sentences[1:10]
-text1
+random_sentences <- sentences[1:10]
+random_sentences
 ```
 
-Look for specific words: 
+1. We want to look for the first appearance of the following prepositions in each sentence: 
+
 ```{r}
-colors=c("the", "a", "of")
-color_match=str_c(colors, collapse = "|")
-str_match(text1,color_match)
+
+prepositions=c("the", "a", "of", "on", "in", "to")
+
 ```
 
-2. separate the words in a matrix
+To do that, we can concatenate de prepositions on a single string to use the `|` operator:
+
 ```{r}
-str_match(text1,"(\\w*)\\W*(\\w*)\\W*(\\w*)\\W*(\\w*)")
+all_prepositions=str_c(prepositions, collapse = "|")
+str_match(random_sentences,all_prepositions)
 ```
+
+2. Now we want to find the first combinations of vowels in each sentence.
+
+```{r}
+str_match(random_sentences, "[.a.|.e.|.i.|.o.|.u.]{2}")
+```
+
+
+
+3.Finally, we want to separate the first three words of each sentence in a matrix:
+```{r}
+str_match(random_sentences,"(\\w*)\\W*(\\w*)\\W*(\\w*)")
+```
+
 
 ---
 
 
 # Where should you go to learn more
 
-There are a bunch of cheatsheets out there. We recommend the one you can find on the [Stringr website](https://stringr.tidyverse.org/). If you want to practice using regular expressions, you can also visit [this website](https://regexone.com/) and use the [_"R Regex Texter"_](https://spannbaueradam.shinyapps.io/r_regex_tester/) to double check your work!
+There are a bunch of cheatsheets out there. We recommend the one you can find on the [Stringr website](https://stringr.tidyverse.org/). If you want to practice using regular expressions, you can also visit [this website](https://regexone.com/) and use the [_R Regex Tester_](https://spannbaueradam.shinyapps.io/r_regex_tester/) to double check your work!
  
 
 ---
@@ -382,10 +419,10 @@ There are a bunch of cheatsheets out there. We recommend the one you can find on
 # Sources {-}
 
 1. [_R for Data Science_](https://r4ds.had.co.nz/strings.html)
-2. [_Automated Data Collection with R. A Practical Guide to Web Scraping and Text Mining_](https://onlinelibrary.wiley.com/doi/book/)
+2. [_Automated Data Collection with R. A Practical Guide to Web Scraping and Text Mining_](https://bit.ly/3BdbkhS)
 3. [_Interactive Tutorial on Regular Expressions_](https://regexone.com/)
 4. [_R Tutorial | Regular Expressions in R_](https://www.youtube.com/watch?v=uJKpz9T7mAg)
 5. [_Cheatsheet Stringr_](https://stringr.tidyverse.org/)
-6. [_"R Regex Texter"_](https://spannbaueradam.shinyapps.io/r_regex_tester/)
+6. [_R Regex Tester_](https://spannbaueradam.shinyapps.io/r_regex_tester/)
 
 

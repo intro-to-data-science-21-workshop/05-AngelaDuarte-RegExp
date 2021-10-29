@@ -49,4 +49,4 @@ The material in this repository is made available under the [MIT license](http:/
 
 **Ana Deniz** prepared the main presentation material, the slides and the video.
 
-**Ángela Duarte Pardo** prepared the main presentation material and the tutorial exercises, helped with the processing of the video. 
+**Ángela Duarte Pardo** prepared the main presentation material and the tutorial exercises, and the video.

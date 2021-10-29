@@ -440,7 +440,7 @@ div.tocify {
 ## [4,] &quot;2 packages of red grapes&quot; 
 ## [5,] NA</code></pre>
 <ol start="7" style="list-style-type: decimal">
-<li><code>*</code> matches 0 or more of the matching patterns in the string that were specified before. It is specially useful for finding empty strings:</li>
+<li><code>*</code> matches 0 or more of the matching patterns in the string that were specified before. It is especially useful for finding empty strings:</li>
 </ol>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> <span class="st">&quot;.*&quot;</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -526,6 +526,8 @@ div.tocify {
 ## [3,] &quot;es - 8 package&quot;   &quot;es&quot;
 ## [4,] &quot;es of red grapes&quot; &quot;es&quot;
 ## [5,] NA                 NA</code></pre>
+<p><strong>Fun fact!!</strong></p>
+<p>In Regexps, using capital letters will have the opposite effect of lower case letters. While <code>\\d</code> will get the first digit of a string, <code>\\D</code> will get the first <em>non-digit</em> of the string.</p>
 <p>Now, let’s practice more complicated, applied stuff!</p>
 <hr />
 </div>
@@ -616,24 +618,23 @@ div.tocify {
 <li><p>Remember that R looks for Regexps sequentially. This means that it will stop searching once it finds the patterns. If you want to get more complicated expressions, you need to keep your repetition operators close and the brackets even closer!</p></li>
 </ol>
 <p>Let’s do this!</p>
-<p><strong>Exercise 1: </strong></p>
+<p><strong>Exercise: </strong></p>
 <p>Imagine you decided to digitize one of your old notebooks and found the following vector.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>contact_list <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot; lisa 444-4444-5555&quot;</span>, <span class="st">&quot;Anna: 456 777-9898&quot;</span>,</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;kevin’s number 344 456 632&quot;</span>, <span class="st">&quot;juan has no number&quot;</span>,</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;576 987 678&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>contact_list <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot; lisa 444-444-5555&quot;</span>, <span class="st">&quot;Anna: 456 777-9898&quot;</span>, </span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;kevin’s number 344 456 6732&quot;</span>,<span class="st">&quot;Mathias245 4566576&quot;</span>, <span class="st">&quot;576 987 6578&quot;</span>) </span></code></pre></div>
 <p><em>How would you separate numbers from words and place them on a matrix?</em></p>
-<p><strong>Solution 1</strong></p>
+<p><strong>Step by step solution</strong></p>
 <p>We will use the expressions we have learned so far to do this.</p>
 <p><strong>Remember to “read” the Regexps out loud!</strong></p>
 <ol style="list-style-type: decimal">
 <li>We want to get the words in our vector first. Let’s try <code>\\w*</code> to get them.</li>
 </ol>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(contact_list, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">w*&quot;</span>)</span></code></pre></div>
-<pre><code>##      [,1]   
-## [1,] &quot;&quot;     
-## [2,] &quot;Anna&quot; 
-## [3,] &quot;kevin&quot;
-## [4,] &quot;juan&quot; 
+<pre><code>##      [,1]        
+## [1,] &quot;&quot;          
+## [2,] &quot;Anna&quot;      
+## [3,] &quot;kevin&quot;     
+## [4,] &quot;Mathias245&quot;
 ## [5,] &quot;576&quot;</code></pre>
 <p><code>\\w*</code> didn’t take all the text in the vector. Why? Three things happened:</p>
 <ul>
@@ -643,19 +644,19 @@ div.tocify {
 </ul>
 <p>This problem is partially solved by using <code>\\w+</code>. What is missing?</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(contact_list, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">w+&quot;</span>)</span></code></pre></div>
-<pre><code>##      [,1]   
-## [1,] &quot;lisa&quot; 
-## [2,] &quot;Anna&quot; 
-## [3,] &quot;kevin&quot;
-## [4,] &quot;juan&quot; 
+<pre><code>##      [,1]        
+## [1,] &quot;lisa&quot;      
+## [2,] &quot;Anna&quot;      
+## [3,] &quot;kevin&quot;     
+## [4,] &quot;Mathias245&quot;
 ## [5,] &quot;576&quot;</code></pre>
-<p>Since <code>\\w+</code> takes numeric values, and it stops at the end of the first word, it still doesn’t get us what we want. We can use <code>\\D+</code> instead (remember that it reads: “R, give me one or more non-digits”).</p>
+<p>Since <code>\\w+</code> takes numeric values, and it stops at the end of the first word, it still doesn’t get us what we want. We can use <code>\\D+</code> instead.</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(contact_list, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">D+&quot;</span>)</span></code></pre></div>
-<pre><code>##      [,1]                
-## [1,] &quot; lisa &quot;            
-## [2,] &quot;Anna: &quot;            
-## [3,] &quot;kevin’s number &quot;   
-## [4,] &quot;juan has no number&quot;
+<pre><code>##      [,1]             
+## [1,] &quot; lisa &quot;         
+## [2,] &quot;Anna: &quot;         
+## [3,] &quot;kevin’s number &quot;
+## [4,] &quot;Mathias&quot;        
 ## [5,] &quot; &quot;</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Now, let’s try and take all the numerical characters from each expression with <code>\\d+</code>(which reads <em>“R, Give me one or more digits”</em>). Notice that it is better not to use <code>\\d*</code>in this exercise because the <code>*</code>asks for “zero or more”, which may return empty strings.</li>
@@ -672,21 +673,40 @@ div.tocify {
 ## [1,] &quot;444&quot;
 ## [2,] &quot;456&quot;
 ## [3,] &quot;344&quot;
-## [4,] NA   
+## [4,] &quot;245&quot;
 ## [5,] &quot;576&quot;</code></pre>
+<p>Notice that the numbers on the strings are grouped together in 3digits or 4 digits groups. We will get the first one by using the <code>{}</code> operator:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(contact_list, <span class="st">&quot;(</span><span class="sc">\\</span><span class="st">d{3})&quot;</span>)</span></code></pre></div>
+<pre><code>##      [,1]  [,2] 
+## [1,] &quot;444&quot; &quot;444&quot;
+## [2,] &quot;456&quot; &quot;456&quot;
+## [3,] &quot;344&quot; &quot;344&quot;
+## [4,] &quot;245&quot; &quot;245&quot;
+## [5,] &quot;576&quot; &quot;576&quot;</code></pre>
 <ol start="3" style="list-style-type: decimal">
+<li>What if we want to get the rest of the digits and put them as columns of a matrix? Hint: remember the <code>()</code> operator to group, and remember to account for the separating characters!</li>
+</ol>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>( contact_list, <span class="st">&quot;(</span><span class="sc">\\</span><span class="st">d{3}).*(</span><span class="sc">\\</span><span class="st">d{3}).*(</span><span class="sc">\\</span><span class="st">d{4})&quot;</span>)</span></code></pre></div>
+<pre><code>##      [,1]           [,2]  [,3]  [,4]  
+## [1,] &quot;444-444-5555&quot; &quot;444&quot; &quot;444&quot; &quot;5555&quot;
+## [2,] &quot;456 777-9898&quot; &quot;456&quot; &quot;777&quot; &quot;9898&quot;
+## [3,] &quot;344 456 6732&quot; &quot;344&quot; &quot;456&quot; &quot;6732&quot;
+## [4,] &quot;245 4566576&quot;  &quot;245&quot; &quot;456&quot; &quot;6576&quot;
+## [5,] &quot;576 987 6578&quot; &quot;576&quot; &quot;987&quot; &quot;6578&quot;</code></pre>
+<ol start="4" style="list-style-type: decimal">
 <li>Putting it all together with grouping operators.</li>
 </ol>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(contact_list, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">w*(</span><span class="sc">\\</span><span class="st">d{3}).*(</span><span class="sc">\\</span><span class="st">d{3}).*(</span><span class="sc">\\</span><span class="st">d{4})&quot;</span>)</span></code></pre></div>
-<pre><code>##      [,1]            [,2]  [,3]  [,4]  
-## [1,] &quot;444-4444-5555&quot; &quot;444&quot; &quot;444&quot; &quot;5555&quot;
-## [2,] &quot;456 777-9898&quot;  &quot;456&quot; &quot;777&quot; &quot;9898&quot;
-## [3,] NA              NA    NA    NA    
-## [4,] NA              NA    NA    NA    
-## [5,] NA              NA    NA    NA</code></pre>
-<p><strong>Exercise 2: </strong></p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>text1 <span class="ot">&lt;-</span> sentences[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>text1</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(contact_list, <span class="st">&quot;(</span><span class="sc">\\</span><span class="st">w*.*).*(</span><span class="sc">\\</span><span class="st">d{3}).*(</span><span class="sc">\\</span><span class="st">d{3}).*(</span><span class="sc">\\</span><span class="st">d{4})&quot;</span>)</span></code></pre></div>
+<pre><code>##      [,1]                          [,2]              [,3]  [,4]  [,5]  
+## [1,] &quot; lisa 444-444-5555&quot;          &quot; lisa &quot;          &quot;444&quot; &quot;444&quot; &quot;5555&quot;
+## [2,] &quot;Anna: 456 777-9898&quot;          &quot;Anna: &quot;          &quot;456&quot; &quot;777&quot; &quot;9898&quot;
+## [3,] &quot;kevin’s number 344 456 6732&quot; &quot;kevin’s number &quot; &quot;344&quot; &quot;456&quot; &quot;6732&quot;
+## [4,] &quot;Mathias245 4566576&quot;          &quot;Mathias&quot;         &quot;245&quot; &quot;456&quot; &quot;6576&quot;
+## [5,] &quot;576 987 6578&quot;                &quot;&quot;                &quot;576&quot; &quot;987&quot; &quot;6578&quot;</code></pre>
+<p><strong>Extra Exercise (in case you want to practice at home)</strong></p>
+<p>For this exercise, we will use the <code>sentences</code> vector included on the <code>stringr</code>package. This vector has one English language sentence per row.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>random_sentences <span class="ot">&lt;-</span> sentences[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>random_sentences</span></code></pre></div>
 <pre><code>##  [1] &quot;The birch canoe slid on the smooth planks.&quot; 
 ##  [2] &quot;Glue the sheet to the dark blue background.&quot;
 ##  [3] &quot;It&#39;s easy to tell the depth of a well.&quot;     
@@ -697,10 +717,13 @@ div.tocify {
 ##  [8] &quot;The hogs were fed chopped corn and garbage.&quot;
 ##  [9] &quot;Four hours of steady work faced us.&quot;        
 ## [10] &quot;Large size in stockings is hard to sell.&quot;</code></pre>
-<p>Look for specific words:</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>colors<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;the&quot;</span>, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;of&quot;</span>)</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>color_match<span class="ot">=</span><span class="fu">str_c</span>(colors, <span class="at">collapse =</span> <span class="st">&quot;|&quot;</span>)</span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(text1,color_match)</span></code></pre></div>
+<ol style="list-style-type: decimal">
+<li>We want to look for the first appearance of the following prepositions in each sentence:</li>
+</ol>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>prepositions<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;the&quot;</span>, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;of&quot;</span>, <span class="st">&quot;on&quot;</span>, <span class="st">&quot;in&quot;</span>, <span class="st">&quot;to&quot;</span>)</span></code></pre></div>
+<p>To do that, we can concatenate de prepositions on a single string to use the <code>|</code> operator:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>all_prepositions<span class="ot">=</span><span class="fu">str_c</span>(prepositions, <span class="at">collapse =</span> <span class="st">&quot;|&quot;</span>)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(random_sentences,all_prepositions)</span></code></pre></div>
 <pre><code>##       [,1] 
 ##  [1,] &quot;a&quot;  
 ##  [2,] &quot;the&quot;
@@ -713,36 +736,49 @@ div.tocify {
 ##  [9,] &quot;of&quot; 
 ## [10,] &quot;a&quot;</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li>separate the words in a matrix</li>
+<li>Now we want to find the first combinations of vowels in each sentence.</li>
 </ol>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(text1,<span class="st">&quot;(</span><span class="sc">\\</span><span class="st">w*)</span><span class="sc">\\</span><span class="st">W*(</span><span class="sc">\\</span><span class="st">w*)</span><span class="sc">\\</span><span class="st">W*(</span><span class="sc">\\</span><span class="st">w*)</span><span class="sc">\\</span><span class="st">W*(</span><span class="sc">\\</span><span class="st">w*)&quot;</span>)</span></code></pre></div>
-<pre><code>##       [,1]                      [,2]    [,3]    [,4]    [,5]       
-##  [1,] &quot;The birch canoe slid&quot;    &quot;The&quot;   &quot;birch&quot; &quot;canoe&quot; &quot;slid&quot;     
-##  [2,] &quot;Glue the sheet to&quot;       &quot;Glue&quot;  &quot;the&quot;   &quot;sheet&quot; &quot;to&quot;       
-##  [3,] &quot;It&#39;s easy to&quot;            &quot;It&quot;    &quot;s&quot;     &quot;easy&quot;  &quot;to&quot;       
-##  [4,] &quot;These days a chicken&quot;    &quot;These&quot; &quot;days&quot;  &quot;a&quot;     &quot;chicken&quot;  
-##  [5,] &quot;Rice is often served&quot;    &quot;Rice&quot;  &quot;is&quot;    &quot;often&quot; &quot;served&quot;   
-##  [6,] &quot;The juice of lemons&quot;     &quot;The&quot;   &quot;juice&quot; &quot;of&quot;    &quot;lemons&quot;   
-##  [7,] &quot;The box was thrown&quot;      &quot;The&quot;   &quot;box&quot;   &quot;was&quot;   &quot;thrown&quot;   
-##  [8,] &quot;The hogs were fed&quot;       &quot;The&quot;   &quot;hogs&quot;  &quot;were&quot;  &quot;fed&quot;      
-##  [9,] &quot;Four hours of steady&quot;    &quot;Four&quot;  &quot;hours&quot; &quot;of&quot;    &quot;steady&quot;   
-## [10,] &quot;Large size in stockings&quot; &quot;Large&quot; &quot;size&quot;  &quot;in&quot;    &quot;stockings&quot;</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(random_sentences, <span class="st">&quot;[.a.|.e.|.i.|.o.|.u.]{2}&quot;</span>)</span></code></pre></div>
+<pre><code>##       [,1]
+##  [1,] &quot;oe&quot;
+##  [2,] &quot;ue&quot;
+##  [3,] &quot;ea&quot;
+##  [4,] NA  
+##  [5,] &quot;ou&quot;
+##  [6,] &quot;ui&quot;
+##  [7,] NA  
+##  [8,] &quot;e.&quot;
+##  [9,] &quot;ou&quot;
+## [10,] NA</code></pre>
+<p>3.Finally, we want to separate the first three words of each sentence in a matrix:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(random_sentences,<span class="st">&quot;(</span><span class="sc">\\</span><span class="st">w*)</span><span class="sc">\\</span><span class="st">W*(</span><span class="sc">\\</span><span class="st">w*)</span><span class="sc">\\</span><span class="st">W*(</span><span class="sc">\\</span><span class="st">w*)&quot;</span>)</span></code></pre></div>
+<pre><code>##       [,1]              [,2]    [,3]    [,4]   
+##  [1,] &quot;The birch canoe&quot; &quot;The&quot;   &quot;birch&quot; &quot;canoe&quot;
+##  [2,] &quot;Glue the sheet&quot;  &quot;Glue&quot;  &quot;the&quot;   &quot;sheet&quot;
+##  [3,] &quot;It&#39;s easy&quot;       &quot;It&quot;    &quot;s&quot;     &quot;easy&quot; 
+##  [4,] &quot;These days a&quot;    &quot;These&quot; &quot;days&quot;  &quot;a&quot;    
+##  [5,] &quot;Rice is often&quot;   &quot;Rice&quot;  &quot;is&quot;    &quot;often&quot;
+##  [6,] &quot;The juice of&quot;    &quot;The&quot;   &quot;juice&quot; &quot;of&quot;   
+##  [7,] &quot;The box was&quot;     &quot;The&quot;   &quot;box&quot;   &quot;was&quot;  
+##  [8,] &quot;The hogs were&quot;   &quot;The&quot;   &quot;hogs&quot;  &quot;were&quot; 
+##  [9,] &quot;Four hours of&quot;   &quot;Four&quot;  &quot;hours&quot; &quot;of&quot;   
+## [10,] &quot;Large size in&quot;   &quot;Large&quot; &quot;size&quot;  &quot;in&quot;</code></pre>
 <hr />
 </div>
 <div id="where-should-you-go-to-learn-more" class="section level1">
 <h1>Where should you go to learn more</h1>
-<p>There are a bunch of cheatsheets out there. We recommend the one you can find on the <a href="https://stringr.tidyverse.org/">Stringr website</a>. If you want to practice using regular expressions, you can also visit <a href="https://regexone.com/">this website</a> and use the <a href="https://spannbaueradam.shinyapps.io/r_regex_tester/"><em>“R Regex Texter”</em></a> to double check your work!</p>
+<p>There are a bunch of cheatsheets out there. We recommend the one you can find on the <a href="https://stringr.tidyverse.org/">Stringr website</a>. If you want to practice using regular expressions, you can also visit <a href="https://regexone.com/">this website</a> and use the <a href="https://spannbaueradam.shinyapps.io/r_regex_tester/"><em>R Regex Tester</em></a> to double check your work!</p>
 <hr />
 </div>
 <div id="sources" class="section level1 unnumbered">
 <h1 class="unnumbered">Sources</h1>
 <ol style="list-style-type: decimal">
 <li><a href="https://r4ds.had.co.nz/strings.html"><em>R for Data Science</em></a></li>
-<li><a href="https://onlinelibrary.wiley.com/doi/book/"><em>Automated Data Collection with R. A Practical Guide to Web Scraping and Text Mining</em></a></li>
+<li><a href="https://bit.ly/3BdbkhS"><em>Automated Data Collection with R. A Practical Guide to Web Scraping and Text Mining</em></a></li>
 <li><a href="https://regexone.com/"><em>Interactive Tutorial on Regular Expressions</em></a></li>
 <li><a href="https://www.youtube.com/watch?v=uJKpz9T7mAg"><em>R Tutorial | Regular Expressions in R</em></a></li>
 <li><a href="https://stringr.tidyverse.org/"><em>Cheatsheet Stringr</em></a></li>
-<li><a href="https://spannbaueradam.shinyapps.io/r_regex_tester/"><em>“R Regex Texter”</em></a></li>
+<li><a href="https://spannbaueradam.shinyapps.io/r_regex_tester/"><em>R Regex Tester</em></a></li>
 </ol>
 </div>
 

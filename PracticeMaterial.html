@@ -335,67 +335,48 @@ div.tocify {
 <p><em>Note</em>: other <code>stringr</code> functions can be used with regular expressions, but we will not explain them because it is not the subject of our workshop. We invite you to go to the “String Manipulation with R” presentation to learn more about this package!</p>
 <p>Before starting, some <strong>reminders</strong>:</p>
 <ol style="list-style-type: decimal">
-<li><p>Practice makes perfect! You might not get the expression you want at first, but with patience and a little work you’ll eventually get where you want.Remember you can always use the <a href="https://spannbaueradam.shinyapps.io/r_regex_tester/"><em>“R Regex Texter”</em></a> to test your work.</p></li>
-<li><p>Read RegExps out loud to understand them! It is easier to remember them if you understand what they mean. For example, “slash d plus”(<code>&quot;\\d+</code>) doesn’t make sense until you remember that it means “give me one or more digits together”). (We thank Colin Quirk for this advice. You can see his tutorial, <a href="https://www.youtube.com/watch?v=uJKpz9T7mAg"><em>here</em></a>.</p></li>
-<li><p>Remember that RegExp stop searching once they find the patterns asked from them. Keep your repetition operators close and the brackets even closer!</p></li>
+<li><p>Practice makes perfect! You might not get the expression you want at first, but with patience and a little work you’ll eventually get where you want. Remember you can always use the <a href="https://spannbaueradam.shinyapps.io/r_regex_tester/"><em>R Regex Tester</em></a> to test your work.</p></li>
+<li><p>Read Regexps out loud to understand them! It is easier to remember them if you understand what they mean. For example, “slash d plus”(<code>&quot;\\d+</code>) doesn’t make sense until you remember that it means “give me one or more digits together”). We thank Colin Quirk for this advice. You can see his tutorial <a href="https://www.youtube.com/watch?v=uJKpz9T7mAg"><em>here</em></a>.</p></li>
+<li><p>Remember that R looks for Regexps sequentially. This means that it will stop searching once it finds the patterns. If you want to get more complicated expressions, you need to keep your repetition operators close and the brackets even closer!</p></li>
 </ol>
-<p>We will first group together the RegExp we have learned so far to remember them with more ease:</p>
-<ol style="list-style-type: decimal">
-<li>Anchors and wild cards</li>
-</ol>
-<ul>
-<li><code>^</code> = Beginning of a string</li>
-<li><code>$</code> = End of a String</li>
-<li><code>.</code> = wild card</li>
-</ul>
-<ol start="2" style="list-style-type: decimal">
-<li>Repetitions</li>
-</ol>
-<ul>
-<li><code>+</code> = 1 or more</li>
-<li><code>*</code> = 0 or more</li>
-</ul>
-<ol start="3" style="list-style-type: decimal">
-<li>Letters that have meanings</li>
-</ol>
-<ul>
-<li><code>\d</code> = digits</li>
-<li><code>\w</code> = alphanumeric characters</li>
-<li><code>\s</code> = spaces</li>
-</ul>
-<ol start="4" style="list-style-type: decimal">
-<li>Brackets</li>
-</ol>
-<ul>
-<li><code>[ ]</code> = Matching characters or brackets</li>
-<li><code>( )</code> = Grouping</li>
-<li><code>{ }</code> = Repeated</li>
-</ul>
-<ol start="5" style="list-style-type: decimal">
-<li>Conditionals</li>
-</ol>
-<ul>
-<li><code>|</code> = Either, or</li>
-</ul>
-<p><strong>Exercise 1: </strong></p>
+<p>Let’s do this!</p>
+<p><strong>Exercise: </strong></p>
 <p>Imagine you decided to digitize one of your old notebooks and found the following vector.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>contact_list <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;lisa 444-4444-5555&quot;</span>, <span class="st">&quot;anna: 456 777-9898&quot;</span>, <span class="st">&quot;kevin’s number 344456632&quot;</span>, <span class="st">&quot;juan has no number&quot;</span>, <span class="st">&quot;576 987 678&quot;</span>) </span></code></pre></div>
-<p>How would you separate numbers from words and place them on a matrix?</p>
-<p>We will use the expressions we have learned so far to do this. <strong>Remember to “read” the RegExp out loud!</strong></p>
-<p>First, let’s try and take all the numerical characters from each expression</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(contact_list, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d+&quot;</span>)</span></code></pre></div>
-<pre><code>##      [,1]       
-## [1,] &quot;444&quot;      
-## [2,] &quot;456&quot;      
-## [3,] &quot;344456632&quot;
-## [4,] NA         
-## [5,] &quot;576&quot;</code></pre>
-<p><strong>Exercise 2: </strong></p>
-<hr />
-</div>
-<div id="where-should-you-go-to-learn-more" class="section level1">
-<h1>Where should you go to learn more</h1>
-<p>There are a bunch of cheat sheets out there. We recommend this one: XXX. If you want to practice using regular expressions, you can also go to <a href="https://regexone.com/">this website</a>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>contact_list <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot; lisa 444-444-5555&quot;</span>, <span class="st">&quot;Anna: 456 777-9898&quot;</span>, </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;kevin’s number 344 456 6732&quot;</span>,<span class="st">&quot;Mathias245 4566576&quot;</span>, <span class="st">&quot;576 987 6578&quot;</span>) </span></code></pre></div>
+<p><em>How would you separate numbers from words and place them on a matrix?</em></p>
+<p><strong>Step by step solution</strong></p>
+<p>We will use the expressions we have learned so far to do this.</p>
+<p><strong>Remember to “read” the Regexps out loud!</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>We want to get the words in our vector first.</p></li>
+<li><p>Now, let’s try and take all the numerical characters from each expression with <code>\\d+</code>(which reads <em>“R, Give me one or more digits”</em>). Notice that it is better not to use <code>\\d*</code>in this exercise because the <code>*</code>asks for “zero or more”, which may return empty strings.</p></li>
+<li><p>What if we want to get the rest of the digits and put them as columns of a matrix? Hint: remember the <code>()</code> operator to group, and remember to account for the separating characters!</p></li>
+<li><p>Putting it all together with grouping operators.</p></li>
+</ol>
+<p><strong>Extra Exercise (in case you want to practice at home)</strong></p>
+<p>For this exercise, we will use the <code>sentences</code> vector included on the <code>stringr</code>package. This vector has one English language sentence per row.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>random_sentences <span class="ot">&lt;-</span> sentences[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>random_sentences</span></code></pre></div>
+<pre><code>##  [1] &quot;The birch canoe slid on the smooth planks.&quot; 
+##  [2] &quot;Glue the sheet to the dark blue background.&quot;
+##  [3] &quot;It&#39;s easy to tell the depth of a well.&quot;     
+##  [4] &quot;These days a chicken leg is a rare dish.&quot;   
+##  [5] &quot;Rice is often served in round bowls.&quot;       
+##  [6] &quot;The juice of lemons makes fine punch.&quot;      
+##  [7] &quot;The box was thrown beside the parked truck.&quot;
+##  [8] &quot;The hogs were fed chopped corn and garbage.&quot;
+##  [9] &quot;Four hours of steady work faced us.&quot;        
+## [10] &quot;Large size in stockings is hard to sell.&quot;</code></pre>
+<ol style="list-style-type: decimal">
+<li>We want to look for the first appearance of the following prepositions in each sentence:</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>prepositions<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;the&quot;</span>, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;of&quot;</span>, <span class="st">&quot;on&quot;</span>, <span class="st">&quot;in&quot;</span>, <span class="st">&quot;to&quot;</span>)</span></code></pre></div>
+<p>To do that, we can concatenate de prepositions on a single string to use the <code>|</code> operator:</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Now we want to find the first combinations of vowels in each sentence.</p></li>
+<li><p>Finally, we want to separate the first three words of each sentence in a matrix:</p></li>
+</ol>
 <hr />
 </div>
 <div id="sources" class="section level1 unnumbered">
@@ -405,6 +386,7 @@ div.tocify {
 <li><a href="https://onlinelibrary.wiley.com/doi/book/"><em>Automated Data Collection with R. A Practical Guide to Web Scraping and Text Mining</em></a></li>
 <li><a href="https://regexone.com/"><em>Interactive Tutorial on Regular Expressions</em></a></li>
 <li><a href="https://www.youtube.com/watch?v=uJKpz9T7mAg"><em>R Tutorial | Regular Expressions in R</em></a></li>
+<li><a href="https://spannbaueradam.shinyapps.io/r_regex_tester/"><em>R Regex Tester</em></a></li>
 </ol>
 </div>
 

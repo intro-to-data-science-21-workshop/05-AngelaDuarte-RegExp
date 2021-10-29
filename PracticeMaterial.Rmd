@@ -25,52 +25,98 @@ As we said before, regular expressions are conventions to find and manipulate pa
 
 Before starting, some **reminders**:
 
-1.  Practice makes perfect! You might not get the expression you want at first, but with patience and a little work you'll eventually get where you want.Remember you can always use the [_"R Regex Texter"_](https://spannbaueradam.shinyapps.io/r_regex_tester/) to test your work. 
+1.  Practice makes perfect! You might not get the expression you want at first, but with patience and a little work you'll eventually get where you want. Remember you can always use the [_R Regex Tester_](https://spannbaueradam.shinyapps.io/r_regex_tester/) to test your work. 
 
-2. Read RegExps out loud to understand them! It is easier to remember them if you understand what they mean. For example, "slash d plus"(`"\\d+`) doesn't make sense until you remember that it means "give me one or more digits together"). (We thank Colin Quirk for this advice. You can see his tutorial, [_here_](https://www.youtube.com/watch?v=uJKpz9T7mAg). 
+2. Read Regexps out loud to understand them! It is easier to remember them if you understand what they mean. For example, "slash d plus"(`"\\d+`) doesn't make sense until you remember that it means "give me one or more digits together"). We thank Colin Quirk for this advice. You can see his tutorial [_here_](https://www.youtube.com/watch?v=uJKpz9T7mAg). 
 
-3. Remember that RegExp stop searching once they find the patterns asked from them. Keep your repetition operators close and the brackets even closer!
+3. Remember that R looks for Regexps sequentially. This means that it will stop searching once it finds the patterns. If you want to get more complicated expressions, you need to keep your repetition operators close and the brackets even closer!
 
-We will first group together the RegExp we have learned so far to remember them with more ease:   
+Let's do this!
 
-1. Anchors and wild cards
-  - `^` = Beginning of a string
-  - `$` = End of a String
-  - `.` = wild card
-2. Repetitions
-  - `+` = 1 or more
-  - `*` = 0 or more
-3. Letters that have meanings
-  - `\d` = digits
-  - `\w` = alphanumeric characters
-  - `\s` = spaces
-4. Brackets 
-  - `[ ]` = Matching characters or brackets
-  - `( )` = Grouping
-  - `{ }` = Repeated 
-5. Conditionals
-  -  `|` = Either, or
-
-
-**Exercise 1: **
+**Exercise: **
 
 Imagine you decided to digitize one of your old notebooks and found the following vector. 
 
 ```{r}
-contact_list <- c("lisa 444-4444-5555", "anna: 456 777-9898", "kevin’s number 344456632", "juan has no number", "576 987 678") 
+contact_list <- c(" lisa 444-444-5555", "Anna: 456 777-9898", 
+                  "kevin’s number 344 456 6732","Mathias245 4566576", "576 987 6578") 
 ```
 
-How would you separate numbers from words and place them on a matrix? 
+*How would you separate numbers from words and place them on a matrix?*
 
-We will use the expressions we have learned so far to do this. **Remember to "read" the RegExp out loud!** 
+**Step by step solution**
 
-First, let's try and take all the numerical characters from each expression
+We will use the expressions we have learned so far to do this. 
+
+**Remember to "read" the Regexps out loud!** 
+
+1. We want to get the words in our vector first. 
 
 ```{r}
-str_match(contact_list, "\\d+") 
+
+```
+ 
+
+2. Now, let's try and take all the numerical characters from each expression with `\\d+`(which reads *"R, Give me one or more digits"*). Notice that it is better not to use `\\d*`in this exercise because the `*`asks for "zero or more", which may return empty strings.
+
+```{r}
+
 ```
 
-**Exercise 2:  **
+
+3. What if we want to get the rest of the digits and put them as columns of a matrix? 
+Hint: remember the `()` operator to group, and remember to account for the separating characters!
+
+```{r}
+
+```
+
+
+3. Putting it all together with grouping operators.
+
+```{r}
+
+```
+
+
+
+**Extra Exercise (in case you want to practice at home)**
+
+For this exercise, we will use the `sentences` vector included on the `stringr`package. This vector has one English language sentence per row. 
+
+```{r}
+random_sentences <- sentences[1:10]
+random_sentences
+```
+
+1. We want to look for the first appearance of the following prepositions in each sentence: 
+
+```{r}
+
+prepositions=c("the", "a", "of", "on", "in", "to")
+
+```
+
+To do that, we can concatenate de prepositions on a single string to use the `|` operator:
+
+```{r}
+
+```
+
+2. Now we want to find the first combinations of vowels in each sentence.
+
+```{r}
+
+```
+
+
+
+3. Finally, we want to separate the first three words of each sentence in a matrix:
+
+```{r}
+
+```
+
 
 
 ---
@@ -81,5 +127,5 @@ str_match(contact_list, "\\d+")
 2. [_Automated Data Collection with R. A Practical Guide to Web Scraping and Text Mining_](https://onlinelibrary.wiley.com/doi/book/)
 3. [_Interactive Tutorial on Regular Expressions_](https://regexone.com/)
 4. [_R Tutorial | Regular Expressions in R_](https://www.youtube.com/watch?v=uJKpz9T7mAg)
-5. [_"R Regex Texter"_](https://spannbaueradam.shinyapps.io/r_regex_tester/)
+5. [_R Regex Tester_](https://spannbaueradam.shinyapps.io/r_regex_tester/)
 
