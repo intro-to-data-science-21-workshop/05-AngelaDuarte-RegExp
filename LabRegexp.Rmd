@@ -36,9 +36,7 @@ They may look *very* complicated if you are seeing them for the first time, but 
 * How can you use Regexps to solve problems - Combinations
 * Try it yourself - Exercises
 * Where should you go to learn more
-* Sources 
-=======
->>>>>>> 448646950747dd0d45b3b46ec305ba1983177c3c
+* Sources
 
 ---
 
