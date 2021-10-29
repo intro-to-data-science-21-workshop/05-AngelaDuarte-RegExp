@@ -1,7 +1,7 @@
 ---
 title: "Regular Expressions"
-subtitle: "RegExp"
-author: "Anna Clara Deniz / Ángela Duarte"
+subtitle: "Regexps"
+author: "Anna Deniz / Ángela Duarte"
 output: 
   html_document:
     toc: TRUE
@@ -20,6 +20,7 @@ library(knitr)
 library(tidyverse)
 library(stringr)
 ```
+
 # Introduction
 
 Regular Expressions, also known as Regexps, are a language that is used to describe and find patterns in strings. They are useful not only in R but in other languages as well. 
@@ -31,7 +32,7 @@ They may look *very* complicated if you are seeing them for the first time, but 
 # Contents:
 * What are Regexps good for?
 * Key expressions
-* How can you use RegExp to solve problems--Combinations
+* How can you use Regexps to solve problems - Combinations
 * Try it yourself - Exercises
 * Where should you go to learn more
 * Sources 
@@ -42,60 +43,165 @@ They may look *very* complicated if you are seeing them for the first time, but 
 
 Regular Expressions are very useful for retrieving information from a messy data set of strings. It is an alternative when manipulating the string to find the information you want is too much work. All you have to do is come up with a pattern for what you want to pull out and write it using Regexps’ syntax. 
 
-Using Regular Expressions with `Stringr` is very convenient, as many of the functions in this package use pattern as an input. 
+Using Regular Expressions with `Stringr` is very convenient, as many of the functions in this package use 'pattern' as an input. 
 
-Here is an example of how Regexp is used to get the right information from a messy data set of phone numbers:
+Here is an example of how Regexps is used to get the right information from a messy list of phone numbers:
 
 ```{r}
 
-#phone_numbers <- c(
-#<input german numbers in a messy way>)
+phone_numbers <- c("(+49) 176 2692-5578", 
+                   "My number is 176 2678 6789", 
+                   "I don't have a phone", 
+                   "176 4567-8923")
 
-#pattern <- #<input pattern>
+pattern <- ".*(\\d{3}).*(\\d{4}).*(\\d{4})"
 
-#str_match(phone_numbers, pattern)
+str_match(phone_numbers, pattern)
 
 ```
-
-Now, let's see how you can develop your own Regex for your own messy data set!
+Now, let's see how you can develop your own Regexps for your own messy data set!
 
 ---
 # Key expressions
-To test the key features, let's use this data set:
+
+To demonstrate the key expressions, let's use this messy list of shopping items:
 
 ```{r}
 
-#data_set <- #<input data set for examples>
+shopping_list <- c("Apples - 5 green", "15 Oranges", " green grapes - 8 package", "2 packages of red grapes", "")
 
 ```
-We will also use the function ‘str_match’ from the package Stringr, which receives as input the string and a pattern. In our case, the pattern will be the Regular Expression.
 
-The simplest Regular Expression “abc”. Its does <input what it does>
+We will also use the function ‘str_match’ from the package Stringr, which receives as input the string and a pattern. In our case, the pattern arguments will be the Regular Expression.
+
+MATCH CHARACTERS
+
+1. The simplest Regular Expression you can write is the piece of string you want to match inside a quotation mark:
 
 ```{r}
 
-#pattern <- #<input regex for key feature>
+pattern <- "grapes"
 
-#str_match(data_set, pattern)
+str_match(shopping_list, pattern)
 
 ```
+2. \d matches the first digit in the string from 0 to 9. One thing to notice is that you have to add an extra \ before the expression for it to work, in order to "escape" the first \, that is a special character:
+ 
+```{r}
 
- \d = Digit (0–9)
- \w = Word Character (a-z, A-Z, 0–9, _)
- \s = Whitespace (space, tab, newline)
- . = Matches Any Character (Wild card)
- + = 1 or more
- * = 0 or more
- [ ] = Matches characters or brackets
- ( ) = Group
- "|" = Either Or
- "{x}" = Exact Number
- "^" = Beginning of a string
- "$" = End of a String
+pattern <- "\\d"
 
-<Note on Upper case commands. Note on “Escape \”.>
+str_match(shopping_list, pattern)
 
-Now, let's practice!
+```
+3. \w matches the first alphanumeric element in the string (a-z, A-Z, 0–9). Here, you also have to use an extra \ to escape it:
+ 
+```{r}
+
+pattern <- "\\w"
+
+str_match(shopping_list, pattern)
+
+```
+4. \s matches the first Whitespace (space, tab, newline) in the string. Again, don't forget to escape it:
+ 
+```{r}
+
+pattern <- "\\s"
+
+str_match(shopping_list, pattern)
+
+```
+5. . matches any character (Wild card), apart from a void string:
+ 
+```{r}
+
+pattern <- "."
+
+str_match(shopping_list, pattern)
+
+```
+QUANTIFIERS
+
+6. + matches 1 or more of the matching patterns in the string that were specified before:
+ 
+```{r}
+
+pattern <- ".+"
+
+str_match(shopping_list, pattern)
+
+```
+7. * matches 0 or more of the matching patterns in the string that were specified before, specially useful to find empty strings:
+ 
+```{r}
+
+pattern <- ".*"
+
+str_match(shopping_list, pattern)
+
+```
+8. {n} will match exactly n of the matching patterns in the string that were specified before:
+
+```{r}
+
+pattern <- ".{3}"
+
+str_match(shopping_list, pattern)
+
+```
+ALTERNATES
+
+9. [ ] is used to match one of the characters inside of it:
+ 
+```{r}
+
+pattern <- "[lo5]"
+
+str_match(shopping_list, pattern)
+
+```
+10. | is used to match one pattern or the other:
+ 
+```{r}
+
+pattern <- "Apple|grape"
+
+str_match(shopping_list, pattern)
+
+```
+ANCHORS
+
+11. ^ matches the beginning of a string:
+
+```{r}
+
+pattern <- "^."
+
+str_match(shopping_list, pattern)
+
+```
+12. $ matches the end of a String:
+
+```{r}
+
+pattern <- ".$"
+
+str_match(shopping_list, pattern)
+
+```
+GROUPS
+
+13. ( ) is used to group the patterns inside of it:
+ 
+```{r}
+
+pattern <- "(grapes)"
+
+str_match(shopping_list, pattern)
+
+```
+Now, let's practice more complicated, applied stuff!
 
 ---
 
@@ -139,7 +245,7 @@ Although there are more regular expressions out there, we believe these are the 
 
 # Where should you go to learn more
 
-There are a bunch of cheat sheets out there. We recommend this one: XXX. If you want to practice using regular expressions, you can also go to [this website](https://regexone.com/).
+There are a bunch of cheatsheets out there. We recommend the one you can find on the [Stringr website](https://stringr.tidyverse.org/). If you want to practice using regular expressions, you can also visit [this website](https://regexone.com/).
  
 
 ---
@@ -148,7 +254,8 @@ There are a bunch of cheat sheets out there. We recommend this one: XXX. If you 
 
 1. [_R for Data Science_](http://r4ds.had.co.nz/)
 2. [_Automated Data Collection with R. A Practical Guide to Web Scraping and Text Mining_](https://onlinelibrary.wiley.com/doi/book/)
-3. [_Interactive Tutorial on Regular Expressions_] (https://regexone.com/)
-4. [_R Tutorial | Regular Expressions in R] (https://www.youtube.com/watch?v=uJKpz9T7mAg)
+3. [_Interactive Tutorial on Regular Expressions_](https://regexone.com/)
+4. [_R Tutorial | Regular Expressions in R](https://www.youtube.com/watch?v=uJKpz9T7mAg)
+5. [_Cheatsheet Stringr](https://stringr.tidyverse.org/)
 
 
