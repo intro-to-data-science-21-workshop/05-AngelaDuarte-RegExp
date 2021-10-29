@@ -1,0 +1,85 @@
+---
+title: "Regular Expressions (RegExp)"
+subtitle: "Practice Material"
+author: "Anna Deniz / Ángela Duarte"
+output: 
+  html_document:
+    toc: TRUE
+    highlight: tango
+    theme: lumen
+    toc_depth: 3
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+library(tidyverse)
+library(stringr)
+```
+# Try it yourself!
+
+As we said before, regular expressions are conventions to find and manipulate patterns in text data. Using the `str_match` function from the `stringr` package we can try out these conventions! 
+
+*Note*: other `stringr` functions can be used with regular expressions, but we will not explain them because it is not the subject of our workshop. We invite you to go to the “String Manipulation with R” presentation to learn more about this package!
+
+Before starting, some **reminders**:
+
+1.  Practice makes perfect! You might not get the expression you want at first, but with patience and a little work you'll eventually get where you want.Remember you can always use the [_"R Regex Texter"_](https://spannbaueradam.shinyapps.io/r_regex_tester/) to test your work. 
+
+2. Read RegExps out loud to understand them! It is easier to remember them if you understand what they mean. For example, "slash d plus"(`"\\d+`) doesn't make sense until you remember that it means "give me one or more digits together"). (We thank Colin Quirk for this advice. You can see his tutorial, [_here_](https://www.youtube.com/watch?v=uJKpz9T7mAg). 
+
+3. Remember that RegExp stop searching once they find the patterns asked from them. Keep your repetition operators close and the brackets even closer!
+
+We will first group together the RegExp we have learned so far to remember them with more ease:   
+
+1. Anchors and wild cards
+  - `^` = Beginning of a string
+  - `$` = End of a String
+  - `.` = wild card
+2. Repetitions
+  - `+` = 1 or more
+  - `*` = 0 or more
+3. Letters that have meanings
+  - `\d` = digits
+  - `\w` = alphanumeric characters
+  - `\s` = spaces
+4. Brackets 
+  - `[ ]` = Matching characters or brackets
+  - `( )` = Grouping
+  - `{ }` = Repeated 
+5. Conditionals
+  -  `|` = Either, or
+
+
+**Exercise 1: **
+
+Imagine you decided to digitize one of your old notebooks and found the following vector. 
+
+```{r}
+contact_list <- c("lisa 444-4444-5555", "anna: 456 777-9898", "kevin’s number 344456632", "juan has no number", "576 987 678") 
+```
+
+How would you separate numbers from words and place them on a matrix? 
+
+We will use the expressions we have learned so far to do this. **Remember to "read" the RegExp out loud!** 
+
+First, let's try and take all the numerical characters from each expression
+
+```{r}
+str_match(contact_list, "\\d+") 
+```
+
+**Exercise 2:  **
+
+
+---
+
+# Sources {-}
+
+1. [_R for Data Science_](https://r4ds.had.co.nz/strings.html)
+2. [_Automated Data Collection with R. A Practical Guide to Web Scraping and Text Mining_](https://onlinelibrary.wiley.com/doi/book/)
+3. [_Interactive Tutorial on Regular Expressions_](https://regexone.com/)
+4. [_R Tutorial | Regular Expressions in R_](https://www.youtube.com/watch?v=uJKpz9T7mAg)
+5. [_"R Regex Texter"_](https://spannbaueradam.shinyapps.io/r_regex_tester/)
+

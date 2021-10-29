@@ -29,8 +29,8 @@ This session on RegExp has 3 main objectives:
 
 ## Instructors
 
-- Anna Deniz ([website](https://github.com/annaccd), 
-- Ángela Duarte Pardo ([website](https://github.com/aduarte56), 
+- Anna Deniz ([website](https://github.com/annaccd)), 
+- Ángela Duarte Pardo ([website](https://github.com/aduarte56)), 
 
 ## Further resources
 

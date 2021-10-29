@@ -15,22 +15,21 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
-library(knitr)
 library(tidyverse)
 library(stringr)
 ```
 # Introduction
 
-Regular Expressions, also known as Regexps, are conventions used to describe and find patterns in strings. They are useful not only in R but in other languages as well. 
+Regular Expressions, also known as Regexps, are used to describe and find patterns in strings. They are useful not only in R but in other languages as well. 
 
-“Strictly speaking, they are not so much a tool as they are a convention on how to query strings across a wide range of functions.” [Munzert et al., (Munzert et al., Automated Data Collection with R] (https://bit.ly/3BdbkhS). 
+“Strictly speaking, they are not so much a tool as they are a convention on how to query strings across a wide range of functions.” [Munzert et al., Automated Data Collection with R] (https://bit.ly/3BdbkhS). 
 
 They may look *very* complicated if you are seeing them for the first time, but it is actually not that hard once you understand how they work. In this tutorial, we are going to show you how to apply them using `Stringr`, a package from the Tidyverse used for string manipulation. 
 
 
 ---
 
-# What are Regexps good for
+# What are Regexps good for?
 
 Regular Expressions are very useful for retrieving information from a messy data set of strings. It is an alternative when manipulating the string to find the information you want is too much work. All you have to do is come up with a pattern for what you want to pull out and write it using Regexps’ syntax. 
 
@@ -126,12 +125,11 @@ str_match(school_things, new_pattern)
 Notice that the result is a matrix in which the columns are the vector itself, its alphanumeric values and its digits. 
 
 3. How can we find the expressions that start with "not" on the vector? 
-Notice that we will use `[[:alpha:]]` to get only the numerical part of it.
 
 Let's learn the power of pattern matching!
 ```{r}
 
-str_match(school_things, "^not.*[[:alpha:]]")
+str_match(school_things, "^not.*")
 
 ```
 
@@ -153,60 +151,97 @@ str_match(school_things,"\\w*(a|e|i|o|u){2}.")
 
 # Try it yourself!
 
-As we said before, regular expressions are conventions to find and manipulate patterns in text data. Using the “str_match” function from the stringR package we can try out these conventions! 
+As we said before, regular expressions are conventions to find and manipulate patterns in text data. Using the `str_match` function from the `stringr` package we can try out these conventions! 
 
-*Note*: other stringR functions can be used with regular expressions, but we will not explain them because it is not the subject of our workshop. We invite you to go to the “String Manipulation with R” presentation to learn more about this package!
+*Note*: other `stringr` functions can be used with regular expressions, but we will not explain them because it is not the subject of our workshop. We invite you to go to the “String Manipulation with R” presentation to learn more about this package!
 
 Before starting, some **reminders**:
 
-1.  Practice makes perfect! You might not get the expression you want at first, but with patience and a little work you'll eventually get where you want. 
+1.  Practice makes perfect! You might not get the expression you want at first, but with patience and a little work you'll eventually get where you want.Remember you can always use the [_"R Regex Texter"_](https://spannbaueradam.shinyapps.io/r_regex_tester/) to test your work. 
 
 2. Read RegExps out loud to understand them! It is easier to remember them if you understand what they mean. For example, "slash d plus"(`"\\d+`) doesn't make sense until you remember that it means "give me one or more digits together"). (We thank Colin Quirk for this advice. You can see his tutorial, [_here_](https://www.youtube.com/watch?v=uJKpz9T7mAg). 
 
-3. Remember that RegExp find patterns and then stop searching. Keep your repetition operators close and the brackets even closer!
+3. Remember that R looks for Regexp sequentially. This means that it will stop searching once it finds the patterns. This means that if you want to get more complicated expressions, you need to keep your repetition operators close and the brackets even closer!
 
-*The story:* 
-Imagine you decided to digitize one of your old notebooks. The following vectors were found on the first three pages.  
+Let's do this!
+
+**Exercise 1: **
+
+Imagine you decided to digitize one of your old notebooks and found the following vector. 
 
 ```{r}
-shopping_list <-  c("tomato", "tangerine", "apple", "banana", "papaya", "tamarind")
-contact_list <- c("lisa 444-4444-5555", "anna linkedin", "kevin’s number 344456632", "juan ?", "mary: linkedin") 
-To_do_list <-c("shopping and banking", "laundry", "university stuff", "salsa and samba")
+contact_list <- c(" lisa 444-4444-5555", "Anna: 456 777-9898", "kevin’s number 344 456 632", "juan has no number", "576 987 678") 
+```
+
+*How would you separate numbers from words and place them on a matrix?*
+
+**Solution 1**
+
+We will use the expressions we have learned so far to do this. **Remember to "read" the RegExp out loud!** 
+
+1. We want to get the words in our vector first. Let's try `\\w*` to get them. 
+
+```{r}
+str_match(contact_list, "\\w*")
+```
+
+`\\w*` didn't take all the text in the vector. Why? Three things happened: 
+
+  - `\\w` takes alphanumeric characters, which include integers. This explains why "576" is is the 5th row.
+
+  - Notice that by using `*` the Regexp `\\w*` takes "zero or more" alphanumeric characters. Since in the first row there is a space before "lisa", this space accounts for the "zero" alphanumeric characters 
+
+  - Also, since `str_match` looks for the patterns sequentially, it stops once it finds them. This is why, it stops after getting the space in row 1 and after getting the first words in rows 2-4.
+
+This problem is partially solved by using `\\w+`. What is missing? 
+```{r}
+str_match(contact_list, "\\w+")
+```
+Since `\\w+` still takes numeric values, and it stops at the end of the first word. This is why, we can use `\\D+` instead (remember that it reads: "R, give me one or more non-digits").
+
+```{r}
+str_match(contact_list, "\\D+")
+```
+
+
+2. Now, let's try and take all the numerical characters from each expression with `\\d`(which reads *"R, Give me one or more digits"*). Notice that it is better not to use `\\d*`in this exercise because the `+`asks for "zero or more", which may return empty strings.
+
+```{r}
+str_match(contact_list, "\\d*")
+str_match(contact_list, "\\d+")
+```
+
+We have the same problem as before, this to
+```{r}
 
 ```
 
-We will use these vectors to practice the key regular expressions and their combinations. But first, let's group them together to be able to remember them with more ease:   
 
-1. Anchors and wild cards
-  - `^` = Beginning of a string
-  - `$` = End of a String
-  - `.` = wild card
-2. Repetitions
-  - `+` = 1 or more
-  - `*` = 0 or more
-3. Letters that have meanings
-  - `\d` = digits
-  - `\w` = alphanumeric characters
-  - `\s` = spaces
-4. Brackets 
-  - `[ ]` = Matching characters or brackets
-  - `( )` = Grouping
-  - `{ }` = Repeated 
-5. Conditionals
-  -  `|` = Either, or
-
-
-**Exercise 1: Basic Combinations of**
-
-Use first the `shopping_list` to practice anchors and wild cards. Remember to "read" the RegExp out loud! 
+3. Putting it all together with grouping operators.
 
 ```{r}
-shopping_list %>% str_match(".")
-
-shopping_list %>% str_match("^t")
+str_match(contact_list, "\\w*(\\d{3}).*(\\d{3}).*(\\d{4})")
 ```
 
-**Exercise 2:  **
+
+
+**Exercise 2: **
+```{r}
+text1 <- sentences[1:50]
+text1
+```
+
+Look for specific words: 
+```{r}
+colors=c("red", "orange", "yellow", "green", "blue", "purple")
+color_match=str_c(colors, collapse = "|")
+str_match(text1,color_match)
+```
+
+2. separate the words in a matrix
+```{r}
+str_match(text1,"(\\w*)\\W*(\\w*)\\W*(\\w*)\\W*(\\w*)\\W*(\\w*)\\W*(\\w*)\\W*(\\w*)")
+```
 
 
 ---

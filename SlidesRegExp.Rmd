@@ -20,6 +20,13 @@ options(htmltools.dir.version = FALSE)
 ```
 
 ---
+# Introduction
+
+Regular Expressions, also known as Regexps, are used to describe and find patterns in strings. They are useful not only in R but in other languages as well. 
+
+“Strictly speaking, they are not so much a tool as they are a convention on how to query strings across a wide range of functions.” [Munzert et al., Automated Data Collection with R] (https://bit.ly/3BdbkhS). 
+
+They may look *very* complicated if you are seeing them for the first time, but it is actually not that hard once you understand how they work. In this tutorial, we are going to show you how to apply them using `Stringr`, a package from the Tidyverse used for string manipulation. 
 
 
 ---
