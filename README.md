@@ -3,13 +3,16 @@
 
 ## Summary
 
-This repository provides materials for the session on **Regular Expressions** that is part of the [I2DS Tools for Data Science workshop](https://github.com/intro-to-data-science-21-workshop) run at the [Hertie School, Berlin](https://www.hertie-school.org/en/) in November 2021. 
+This repository provides materials for the session on **Regular Expressions with Stringr** that is part of the [I2DS Tools for Data Science workshop](https://github.com/intro-to-data-science-21-workshop) run at the [Hertie School, Berlin](https://www.hertie-school.org/en/) in November 2021. 
 
-The student-run workshop is part of the course [Introduction to Data Science](https://github.com/intro-to-data-science-21) taught by Simon Munzert at the Hertie School, Berlin, in Fall 2021.
+The student-run workshop is part of the course [Introduction to Data Science](https://github.com/intro-to-data-science-21) taught by Simon Munzert in Fall 2021.
 
 ### Session contents
 
-This session will introduce you to the basic Regular Expressions and how to use them with some basic Stringr functions. Regular expressions are conventions used to describe and find patterns in strings (text data) that work across programming languages. To learn how to use them, this session will have X parts which include: 
+This session will introduce you to the basic Regular Expressions and how to use them with some basic Stringr functions. Regular expressions are conventions used to describe and find patterns in strings (text data) that work across programming languages.
+
+To learn how to use them, this session will include: 
+
 - an overview of what these expressions allow us to do, 
 - an explanation of the key conventions,
 - examples on how to combine them to solve problems,
@@ -18,13 +21,13 @@ This session will introduce you to the basic Regular Expressions and how to use 
 
 ### Main learning objectives
 
-This session on RegExp has 3 main objectives: 
+This session on Regexps has 3 main objectives: 
 
-1. Equip participants with an understanding of what RegExp are and what they are useful for.
+1. Equip participants with an understanding of what Regexps are and what they are useful for.
 
 2. Identify and use key regular expressions and what patterns do they account for.
 
-3. Provide participants practice material as well as some further readings on RegExp.
+3. Provide participants practice material as well as some further readings on Regexps.
 
 
 ## Instructors
@@ -46,7 +49,6 @@ The material in this repository is made available under the [MIT license](http:/
 
 ## Statement of contributions
 
-
 **Ana Deniz** prepared the main presentation material, the slides and the video.
 
-**Ángela Duarte Pardo** prepared the main presentation material and the tutorial exercises, and the video.
+**Ángela Duarte Pardo** prepared the main presentation material, the tutorial exercises, and the video.
