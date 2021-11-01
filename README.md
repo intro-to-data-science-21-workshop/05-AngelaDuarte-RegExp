@@ -43,12 +43,25 @@ This session on Regexps has 3 main objectives:
 4. [_Hands-on Tutorial on Regular Expressions on R_](https://www.youtube.com/watch?v=uJKpz9T7mAg)
 5. [_R Regex Tester_](https://spannbaueradam.shinyapps.io/r_regex_tester/)
 
-## License
-
-The material in this repository is made available under the [MIT license](http://opensource.org/licenses/mit-license.php). 
 
 ## Statement of contributions
 
 **Ana Deniz** prepared the main presentation material, the slides and the video.
 
 **Ángela Duarte Pardo** prepared the main presentation material, the tutorial exercises, and the video.
+
+## A note on the documents in the repo.
+In this repo, there are several documents related to the session on Regexps with Stringr. Specially interesting are: 
+
+1. Regexps (.rmd, .html) has all the materials (explanation and solved exercises).
+
+2. RegexpExercises (.rmd) contains the instructions to the exercises for the audience to try out (no solutions!).
+
+3. Regular Expressions with Stringr (.pdf) contains the presentation.
+
+
+
+## License
+
+The material in this repository is made available under the [MIT license](http://opensource.org/licenses/mit-license.php). 
+
